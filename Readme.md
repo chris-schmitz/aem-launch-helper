@@ -1,5 +1,7 @@
 # AEM Helper
 
+**Project still in progress**
+
 ## Purpose
 
 AEM Launch Helper is a command line utility that facilitates the launching of an AEM instance.
@@ -13,6 +15,8 @@ The environment folders will be created next to it:
     ~Development:
         AEMLaunchHelper/
         AEMEnvironments/...
+
+![launch helper demo](readmeAttachments/aemhelperDemo.gif)
 
 
 ## Installation

@@ -9,16 +9,12 @@ const {baseJarExists, createEnvironmentDirectory, copyToLocation} = require('../
 
 const {assets} = require('../config')
 
-// check to see if the jar file of the given name  is in assets
-// if so,
-
 program
     .option('-e, --environment <env>, The name of the environment to create this instance for.')
     .option('-p, --port <port>, The port you want associated with this instance.')
     .option('-l, --license <licensepath>, The path to the license file that will used for this instance.')
     .parse(process.argv)
 
-// let targetLocation = appPaths.environmentBuildDirectory
 
 
 function generateEnviromentSpecificJarName(){
