@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "A command line utility to facilitate the use of AEM server instances.",
   "main": "index.js",
+  "bin": {
+    "aemhelper": "bin/aemhelper.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

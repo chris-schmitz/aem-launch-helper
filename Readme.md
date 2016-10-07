@@ -33,6 +33,15 @@ The jar file should be placed in the `assets/` folder at the root of this projec
 
 come back and fill this in
 
+### Add the `aemhelper` command to your path
+
+To get access to the `aemhelper` command, you just need to run the `npm link` command.
+
+    cd AEMLaunchHelper
+    npm link
+    
+    aemhelper --help
+
 ## Tasks
 
 ### Create a new server environment
