@@ -4,6 +4,17 @@
 
 AEM Launch Helper is a command line utility that facilitates the launching of an AEM instance.
 
+Note that the environment folders and files that are created by this application will be placed in the same directory that you place the project folder. I.e. If you place this project folder at:
+
+    ~/Development/AEMLaunchHelper
+
+The environment folders will be created next to it:
+
+    ~Development:
+        AEMLaunchHelper/
+        AEMEnvironments/...
+
+
 ## Installation
 
 ### Adding the jar file
@@ -14,7 +25,8 @@ The jar file should be placed in the `assets/` folder at the root of this projec
 
     aem-environment-port.jar
 
-### Project setup
+### Creating `config.js` file
+
 come back and fill this in
 
 ## Tasks

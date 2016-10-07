@@ -3,7 +3,8 @@ const paths = {
 }
 
 const assets ={
-    baseJarName: 'aem-environment-port.jar'
+    baseJarName: 'aem-environment-port.jar',
+    licenseFileName: 'license.properties'
 }
 
 
