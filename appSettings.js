@@ -29,5 +29,6 @@ const requiredAemFilePatterns  = [jarPattern,'license\.properties']
 module.exports = {
     appPaths,
     isAValidEnvironment,
+    availableEnvironments,
     requiredAemFilePatterns
 }
