@@ -12,7 +12,7 @@ const appSettings = {
 }
 
 appSettings.requiredAemFilePatterns = [
-    `aem-(${appSettings.availableEnvironments.join('|')})-[\\d]+.jar`,
+    `aem-(${appSettings.availableEnvironments.join('|')})-[0-9]+.jar`,
     'license\.properties'
 ]
 
