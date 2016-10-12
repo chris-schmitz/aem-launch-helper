@@ -16,5 +16,6 @@
     "co": "^4.6.0",
     "commander": "^2.9.0",
     "mkdirp": "^0.5.1"
-  }
+  },
+  "devDependencies": {}
 }

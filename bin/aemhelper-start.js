@@ -5,11 +5,12 @@ const fs = require('fs')
 const chalk = require('chalk')
 const co = require('co')
 const {exec} = require('child_process')
-const {appPaths, isAValidEnvironment} = require('../appSettings')
+const {appSettings, isAValidEnvironment} = require('../appSettings')
 const {directoryContainsRequiredAEMFiles,openJarFile} = require('../lib/FileSystemTools')
 
 program
     .option('-e, --environment <env>, The name of the environment you would like to start.')
+    // .option('-a, --all, Start all available environments.')
     .parse(process.argv)
 
 if(!isAValidEnvironment(program.environment)){
@@ -18,8 +19,8 @@ if(!isAValidEnvironment(program.environment)){
 }
 
 co(function *(){
-    const targetPath = `${appPaths.environmentBuildDirectory}/${program.environment}`
-    let hasFiles = yield directoryContainsRequiredAEMFiles(targetPath)
+    const targetPath = `${appSettings.environmentBuildDirectory}/${program.environment}`
+    yield directoryContainsRequiredAEMFiles(targetPath)
     yield openJarFile(`${targetPath}/aem-${program.environment}-*.jar`)
     console.log(chalk.green(`AEM ${program.environment} enviornment starting up...`))
 })
