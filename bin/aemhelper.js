@@ -8,4 +8,5 @@ program
     .command('stop [options]', 'Stops the AEM environment instance per the given environment string.')
     .command('restart [options]', 'Stops and Starts the AEM environment instance per the given environment string.')
     .command('slay [options]', 'Stops the AEM instance and deletes the crx-quickstart directory.')
+    .command('push [options]', 'Push changes to aem instance.')
     .parse(process.argv)
