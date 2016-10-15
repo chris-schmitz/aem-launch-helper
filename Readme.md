@@ -83,6 +83,18 @@ Stops the AEM instance and deletes the crx-quickstart directory.
 
     aemhelper slay -e <environment>
 
+### Push to AEM instance
+
+Takes your local File Vault file system and pushes it into your AEM instance.
+
+    aemhelper push
+
+### Watch your local files to sync with AEM instance
+
+Watches your local File Vault file system for changes and pushes those changes into your AEM instance on change.
+
+    aemhelper watch
+
 
 ## Not sure if we can do this but maybe!
 
