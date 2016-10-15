@@ -1,10 +1,18 @@
 #!/usr/bin/env node
 
+
 const program = require('commander')
 const chalk = require('chalk')
 const {exec} = require('child_process')
 const fs = require('fs')
 const {appSettings} = require('../appSettings')
+const co = require('co')
+const FileSystemTools = require('../lib/FileSystemTools')
+let fst = new FileSystemTools()
+
+program
+    .option('-e, --environment <env>', 'The AEM environment you would like to stop.')
+    .parse(process.argv)
 
 function matchesJarPattern(string){
     /*
@@ -40,11 +48,14 @@ exec('ps x', appSettings.maxBufferValue, (err, stdout, stderr) => {
         return
     }
 
+    let promises = []
     jarProcessIds.forEach(id => {
-        exec(`kill -9 ${id}`, (err, stdout, stderr) => {
-            if(err) throw new Error(chalk.red(err))
-            if(stderr) throw new Error(chalk.red(stderr))
-            console.log(chalk.green(`AEM process ${id} killed.`));
-        })
+        promises.push(fst.killProcess(id))
+        // exec(`kill -9 ${id}`, (err, stdout, stderr) => {
+        //     if(err) throw new Error(chalk.red(err))
+        //     if(stderr) throw new Error(chalk.red(stderr))
+        //     console.log(chalk.green(`AEM process ${id} killed.`));
+        // })
     })
+    console.log(promises);
 })

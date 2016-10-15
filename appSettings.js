@@ -5,6 +5,7 @@ const path = require('path')
 // slash does what it does for a string (i.e. strike the next char) instead of what it does within a regular expression.
 
 const appSettings = {
+    version: '0.1.0',
     maxBuffer: {maxBuffer: 1024 * 500},
     environmentBuildDirectory: path.resolve(__dirname, '../AEMEnvironments'),
     maxBufferValue: {maxBuffer: 1024 * 500},
@@ -16,8 +17,8 @@ appSettings.requiredAemFilePatterns = [
     'license\.properties'
 ]
 
-const isAValidEnvironment = function (env){
+exports.isAValidEnvironment = function (env){
     return appSettings.availableEnvironments.includes(env)
 }
 
-module.exports = {appSettings, isAValidEnvironment}
+exports.appSettings

@@ -8,8 +8,10 @@ const {exec} = require('child_process')
 const {appSettings, isAValidEnvironment} = require('../appSettings')
 const {directoryContainsRequiredAEMFiles,openJarFile} = require('../lib/FileSystemTools')
 
+console.log(appSettings)
+
 program
-    .option('-e, --environment <env>, The name of the environment you would like to start.')
+    .option('-e, --environment <env>', 'The name of the environment you would like to start.', /^()$/i)
     // .option('-a, --all, Start all available environments.')
     .parse(process.argv)
 
