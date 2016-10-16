@@ -13,7 +13,7 @@ const fst = new FileSystemTools
 program
     .option(
         '-e, --environment [env]',
-        `The AEM environment you would like to stop. availableEnvironments: ${appSettings.availableEnvironments.join(', ')}.`,
+        `The AEM environment you would like to start. availableEnvironments: ${appSettings.availableEnvironments.join(', ')}.`,
         new RegExp(`^(${appSettings.availableEnvironments.join('|')})$`),
         new Error(chalk.red('Invalid environment argument'))// if the value provied doesn't match the regex, error out
     )

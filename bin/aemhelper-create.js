@@ -15,7 +15,7 @@ program
     // at some point it would be good to set the default value per the env specified, but for now I'm find with just defaulting to 4502.
     .option(
         '-e, --environment [env]',
-        `The AEM environment you would like to stop. availableEnvironments: ${appSettings.availableEnvironments.join(', ')}.`,
+        `The AEM environment you would like to create. availableEnvironments: ${appSettings.availableEnvironments.join(', ')}.`,
         new RegExp(`^(${appSettings.availableEnvironments.join('|')})$`),
         new Error(chalk.red('Invalid environment argument'))
     )
