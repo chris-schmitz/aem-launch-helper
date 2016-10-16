@@ -6,13 +6,12 @@ const chalk = require('chalk')
 const {pushToAEM} = require('../lib/FileSystemTools')
 
 program
-    .option('-p, --port [port]', 'Port to use for push. Defaults to 4502.')
+    .option('-p, --port [port]', 'Port to use for push. Defaults to 4502.', /[0-9]+/, 4502)
     .option('-c, --credentials [user:password]', 'Credentials to use for push.')
     .parse(process.argv)
 
 let credentials = program.credentials ? `--credentials ${program.credentials}` : ''
-let port = program.port || '4502'
 
-pushToAEM(credentials, port)
+pushToAEM(credentials, program.port)
     .then(stdout => console.log(chalk.green(stdout)))
     .catch(err => console.error(chalk.red(err)))

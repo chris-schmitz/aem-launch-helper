@@ -1,7 +1,7 @@
 # Todos
 
 - Refactor subtools to match patterns in the rest of the project:
-    - stop
+    - x stop
     - push
 - Add `init` subtool
     - Creates ENV folder
@@ -11,3 +11,4 @@
     - extracts vlt tool(?)
 - Replace manual checks for proper parameters with commander regex arguments
 - Check for `vlt` in the push/pull scripts and error out if it's not present
+- Add "all" option into all subtools for interating with all envs (see stop subtool)

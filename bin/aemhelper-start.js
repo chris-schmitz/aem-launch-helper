@@ -6,24 +6,30 @@ const chalk = require('chalk')
 const co = require('co')
 const {exec} = require('child_process')
 const {appSettings, isAValidEnvironment} = require('../appSettings')
-const {directoryContainsRequiredAEMFiles,openJarFile} = require('../lib/FileSystemTools')
+const {FileSystemTools} = require('../lib/FileSystemTools')
+const fst = new FileSystemTools
 
-console.log(appSettings)
 
 program
-    .option('-e, --environment <env>', 'The name of the environment you would like to start.', /^()$/i)
+    .option(
+        '-e, --environment [env]',
+        `The AEM environment you would like to stop. availableEnvironments: ${appSettings.availableEnvironments.join(', ')}.`,
+        new RegExp(`^(${appSettings.availableEnvironments.join('|')})$`),
+        new Error(chalk.red('Invalid environment argument'))// if the value provied doesn't match the regex, error out
+    )
     // .option('-a, --all, Start all available environments.')
     .parse(process.argv)
 
-if(!isAValidEnvironment(program.environment)){
-    console.error(chalk.red(`The argument ${program.environment} is not a valid environment name.`))
+// If we aren't killing all instances we need to make sure that we're using a
+// valid environment string to target the process(es) to kill.
+if(program.all === undefined && program.environment instanceof Error){
+    console.error(program.environment)
     return
 }
-
 co(function *(){
     const targetPath = `${appSettings.environmentBuildDirectory}/${program.environment}`
-    yield directoryContainsRequiredAEMFiles(targetPath)
-    yield openJarFile(`${targetPath}/aem-${program.environment}-*.jar`)
+    yield fst.directoryContainsRequiredAEMFiles(targetPath)
+    yield fst.openJarFile(`${targetPath}/aem-${program.environment}-*.jar`)
     console.log(chalk.green(`AEM ${program.environment} enviornment starting up...`))
 })
 .catch(error => {throw new Error(chalk.red(error))})
