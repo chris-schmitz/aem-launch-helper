@@ -1,6 +1,5 @@
 # AEM Helper
 
-**Project still in progress**
 
 ## Purpose
 
@@ -39,7 +38,7 @@ To get access to the `aemhelper` command, you just need to run the `npm link` co
 
     cd AEMLaunchHelper
     npm link
-    
+
     aemhelper --help
 
 ## Tasks
@@ -68,12 +67,6 @@ Stops the AEM environment instance per the given environment string.
 
     aemhelper  stop -e <environment>
 
-### Restart AEM instance
-
-Stops and Starts the AEM environment instance per the given environment string.
-
-    aemhelper  stop -e <environment>
-
 
 ### Slay AEM instance
 
@@ -94,10 +87,3 @@ Takes your local File Vault file system and pushes it into your AEM instance.
 Watches your local File Vault file system for changes and pushes those changes into your AEM instance on change.
 
     aemhelper watch
-
-
-## Not sure if we can do this but maybe!
-
-### AEM Status
-
-check system to see if the specific aem instance is running or not (px aux | grep ...)?
