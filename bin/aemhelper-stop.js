@@ -11,28 +11,31 @@ const FileSystemTools = require('../lib/FileSystemTools')
 let fst = new FileSystemTools()
 
 program
-    .option('-e, --environment <env>', 'The AEM environment you would like to stop.')
+    .option(
+        '-e, --environment [env]',
+        'The AEM environment you would like to stop.',
+        new RegExp(`^(${appSettings.availableEnvironments.join('|')})$`),
+        new Error(chalk.red('Invalid environment argument'))// if the value provied doesn't match the regex, error out
+    )
+    .option('-a, --all', 'Kill all running instances of AEM.')
     .parse(process.argv)
 
-function matchesJarPattern(string){
-    /*
-     | Blergh, I don't like doing it this way. I went through all of the trouble
-     | to make the app settings flexible so that we didn't need to care about
-     | what patterns were needed and what environment strings were valid. I'm
-     | being _ultra lazy_ here and calling the pattern needed via index b/c it's
-     | breakfast and I want to get some stuff built before going to work.
-     | Later, come back and refactor the `appSettings.requiredAemFilePatterns`
-     | to use object values with key names instead of just an array. This way
-     | we can just say `appSettings.requiredAemFilePatterns.jarFile` to pull the
-     | pattern so that the position of the pattern in the array is irrelevant.
-     | Who knows if I'll actually come back and do this ;P. If nothing else this
-     | comment block is here to point out that I _definitely recognize_ that
-     | it _should_ be done.
-    */
-    return string.match(appSettings.requiredAemFilePatterns[0])
+// If we aren't killing all instances we need to make sure that we're using a
+// valid environment string to target the process(es) to kill.
+if(program.all === undefined && program.environment instanceof Error){
+    console.error(program.environment)
+    return
 }
 
-exec('ps x', appSettings.maxBufferValue, (err, stdout, stderr) => {
+function matchesJarPattern(string){
+    if(program.all){
+        return string.match(appSettings.requiredAemFilePatterns[0])
+    }
+
+    return string.match(new RegExp(`aem-${program.environment}-[0-9]+.jar`))
+}
+
+exec('ps x', appSettings.maxBuffer, (err, stdout, stderr) => {
     if(err) throw new Error(chalk.red(err))
     if(stderr) throw new Error(chalk.red(stderr))
 
@@ -48,14 +51,7 @@ exec('ps x', appSettings.maxBufferValue, (err, stdout, stderr) => {
         return
     }
 
-    let promises = []
-    jarProcessIds.forEach(id => {
-        promises.push(fst.killProcess(id))
-        // exec(`kill -9 ${id}`, (err, stdout, stderr) => {
-        //     if(err) throw new Error(chalk.red(err))
-        //     if(stderr) throw new Error(chalk.red(stderr))
-        //     console.log(chalk.green(`AEM process ${id} killed.`));
-        // })
-    })
-    console.log(promises);
+    Promise.all(jarProcessIds.map(id => fst.killProcess(id)))
+        .then(result => console.log(chalk.green(result.join('\n'))))
+        .catch(err => console.log(chalk.red(err)))
 })

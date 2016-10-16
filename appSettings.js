@@ -21,4 +21,4 @@ exports.isAValidEnvironment = function (env){
     return appSettings.availableEnvironments.includes(env)
 }
 
-exports.appSettings
+exports.appSettings = appSettings
