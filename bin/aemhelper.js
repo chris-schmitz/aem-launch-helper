@@ -9,5 +9,6 @@ program
     .command('restart [options]', 'Stops and Starts the AEM environment instance per the given environment string.')
     .command('slay [options]', 'Stops the AEM instance and deletes the crx-quickstart directory.')
     .command('push [options]', 'Push changes to aem instance.')
+    .command('pull [options]', 'Pull changes from aem instance.')
     .command('watch [options]', 'Watch changes in your local file system and push to AEM on change.')
     .parse(process.argv)
