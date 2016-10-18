@@ -39,7 +39,7 @@ exec('ps x', appSettings.maxBuffer, (err, stdout, stderr) => {
     if(err) throw new Error(chalk.red(err))
     if(stderr) throw new Error(chalk.red(stderr))
 
-    let jarProcessIds =
+    let jarProcesses =
         stdout.toString()
               .split('\n')
               .filter(matchesJarPattern)
@@ -47,6 +47,14 @@ exec('ps x', appSettings.maxBuffer, (err, stdout, stderr) => {
               .filter(processIdMatch => processIdMatch.length >= 2 ) // i.e. we found a match for our pattern and were able to see group 1 (`([0-9]+)`) from the match
               .map(processMatch => processMatch[1])
 
+    if(jarProcesses.length === 0){
+        console.log(chalk.blue("Cannot find an AEM instance to stop."))
+        return
+    }
+    console.log(jarProcesses.map(processLine => processLine.match(/^./)))
+
+/*
+    let jarProcessIds = jarProcesses.map(processLine => processLine.match(/^[0-9]+/)[0])
 
     if(jarProcessIds.length === 0){
         console.log(chalk.blue('There are no aem instance processes running.'))
@@ -56,4 +64,5 @@ exec('ps x', appSettings.maxBuffer, (err, stdout, stderr) => {
     Promise.all(jarProcessIds.map(id => fst.killProcess(id)))
         .then(result => console.log(chalk.green(result.join('\n'))))
         .catch(err => console.log(chalk.red(err)))
+        */
 })

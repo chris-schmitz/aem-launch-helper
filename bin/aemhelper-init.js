@@ -25,6 +25,13 @@ let askForLicense = {
     message: 'Enter the path to your AEM license.'
 }
 
+let askForBinaryInstallPath = {
+    type: 'input',
+    name: 'binInstallPath',
+    message: 'As a part of this process the `vlt` command line tool will be installed. What bin directory would you like it installed in?',
+    default: '/usr/local/bin' // not sure if this is the best default to use. Run with it or now.
+}
+
 // I'm leaving this in b/c I may add it back in during a refactor, but at the moment
 // I'm cutting it out because part of the xml needed in the `~/.valut/auth.xml`
 // file requires the url of the instance including the port to use. We do have
@@ -50,16 +57,25 @@ let askForLicense = {
 co(function *(){
     let jarPathAnswer = yield inquirer.prompt(askForJarLocation)
     let licensePathAnswer = yield inquirer.prompt(askForLicense)
+    let binInstallPathAnswer = yield inquirer.prompt(askForBinaryInstallPath)
     // let aemUsernameAnswer = yield inquirer.prompt(askForUsername)
     // let aemPasswordAnswer = yield inquirer.prompt(askForPassword)
 
     let bar = new ProgressBar('Setting up helper tools (step :current of 2): [:bar]', {total: 4})
     bar.tick()
 
-    yield fst.copyToLocation(jarPathAnswer.jarPath, `${config.paths.assets}/${config.assets.baseJarName}`)
-    bar.tick()
     yield fst.copyToLocation(licensePathAnswer.licensePath, `${config.paths.assets}/${config.assets.licenseFileName}`)
     bar.tick()
+    yield fst.copyToLocation(jarPathAnswer.jarPath, `${config.paths.assets}/${config.assets.baseJarName}`)
+    bar.tick()
+    yield fst.extractVltCliTool(binInstallPathAnswer.binInstallPath)
+    bar.tick()
+    let inPath = yield fst.checkToSeeIfVltIsInPath()
+    bar.tick()
+
+    if(!inPath){
+        console.log(chalk.bgCyan('Add the following to your environment path: <path to installed vault tools>'))
+    }
 
     console.log(chalk.green('\nInitilization complete.'))
 }).catch(error => {
