@@ -82,6 +82,12 @@ Takes your local File Vault file system and pushes it into your AEM instance.
 
     aemhelper push
 
+### Pull from AEM instance
+
+Pulls from your AEM instance into your local File Vault file system.
+
+    aemhelper pull
+
 ### Watch your local files to sync with AEM instance
 
 Watches your local File Vault file system for changes and pushes those changes into your AEM instance on change.
