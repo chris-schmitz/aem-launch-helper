@@ -1,5 +1,6 @@
 # AEM Helper
 
+*Project in progress*
 
 ## Purpose
 
@@ -17,22 +18,55 @@ The environment folders will be created next to it:
 
 ![launch helper demo](readmeAttachments/aemhelperDemo.gif)
 
+## Special OS note
 
-## Installation
+Several of the functions use in this project call shell functions, specifically shell functions available in the Mac OS ecosystem. Because of this, the current version of aemhelper is a mac only tool.
 
-### Adding the jar file
+That said, we are open for pull requests so if you're a windows dev who wants to use this project please feel free to build windows equevalent features and send over a pull request.
 
-The AEM environment jar file isn't actually included in the project. If you're using this tool you should already have that file.
+The `exec` calls within the project that limit it to mac only are found in:
 
-The jar file should be placed in the `assets/` folder at the root of this project and renamed to the following:
+- `lib/FileSystemTools.js`
+    - `FileSystemTools.prototype.openJarFile`
+    - `FileSystemTools.prototype.killProcess`
+    - `FileSystemTools.prototype.destroyEnvironment`
+- `bin/aemhelper-start`
+    - In the generation function passed into `co` (the forward slash is *nix specific):
 
-    aem-environment-port.jar
+            yield fst.openJarFile(`${targetPath}/aem-${program.environment}-*.jar`)
 
-### Creating `config.js` file
+- `bin/aemhelper-stop`
+    - The `exec` function called here is using a *nix specific command:
 
-come back and fill this in
+            exec('ps x', appSettings.maxBuffer, (err, stdout, stderr) => {...
 
-### Add the `aemhelper` command to your path
+
+## Installation and Initialization
+
+### Installation
+
+First, install this package by [downloading this package's zip file](https://github.com/chris-schmitz/aem-launch-helper/archive/master.zip) and unzipping it in whatever directory you'd like to set up your AEM instances in.
+
+Note that this tool will create a folder called `AEMEnvironments` directly next to itself and this folder will contain all of the environment instances you create. E.g.
+
+    AEMLaunchHelper/
+    AEMEnvironments/
+        author/
+        publish/
+
+### Initialization
+
+The AEM environment .jar and license files aren't actually included in this tool. If you're using this tool you should already have those file.
+
+To copy the .jar and license files into the tool's structure so they can be used in the various commands below, run the aemhelper command:
+
+    aemhelper init
+
+During this initialization process you will be asked for the paths of both the .jar file and the license file. At the moment the tool does not support path tab completion so it's a good idea to have those paths ready before running `aemhelper init`.
+
+The .jar and license file will be copied into the `AEMLaunchHelper/assets/` directory.
+
+## Add the `aemhelper` command to your path
 
 To get access to the `aemhelper` command, you just need to run the `npm link` command.
 
