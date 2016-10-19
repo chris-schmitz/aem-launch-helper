@@ -4,20 +4,25 @@ const program   = require('commander')
 const {exec}    = require('child_process')
 const chalk     = require('chalk')
 const gulp      = require('gulp')
-const {pushToAEM} = require('../lib/FileSystemTools')
+const path = require('path')
+const logAndNotifiy = require('../lib/Notifier')
+const {FileSystemTools} = require('../lib/FileSystemTools')
+const fst = new FileSystemTools
 
 program
     .option('-p, --port [port]', 'Port to use for push. Defaults to 4502.', /[0-9]+/, 4502)
     .option('-c, --credentials [user:password]', 'Credentials to use for push.')
     .parse(process.argv)
 
+
+
 let credentials = program.credentials ? `--credentials ${program.credentials}` : ''
 
 gulp.watch(['jcr_root/**/*','!jcr_root/**/.vlt', 'jcr_root/**/.content.xml'],
     () => {
-        pushToAEM(credentials, program.port)
-            .then(stdout => console.log(chalk.green(stdout)))
-            .catch(err => console.error(chalk.red(err)))
+        fst.pushToAEM(credentials, program.port)
+            .then(stdout => logAndNotifiy(stdout, 'success', 'both'))
+            .catch(err => logAndNotifiy(stdout, 'failure', 'both'))
     }
 )
     .on('change', event => console.log('File ' + event.path + ' was ' + event.type))
