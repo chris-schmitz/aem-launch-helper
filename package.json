@@ -16,6 +16,7 @@
     "co": "^4.6.0",
     "commander": "^2.9.0",
     "gulp": "^3.9.1",
+    "gulp-sass": "^2.3.2",
     "inquirer": "^1.2.2",
     "mkdirp": "^0.5.1",
     "node-notifier": "^4.6.1",
