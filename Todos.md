@@ -13,3 +13,4 @@
 - Add "all" option into all subtools for interating with all envs (see stop subtool)
 - Review the [completion.js](https://docs.npmjs.com/cli/completion) tool for allowing tab completion in prompts
 - Determine if `usr/local/bin` is the best bin dir to use for the vlt tools
+- Refactor all console logs to use the logAndNotify module

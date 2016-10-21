@@ -37,4 +37,4 @@ gulp.watch(['jcr_root/**/*.scss'],
 	}
 )
 
-console.log(chalk.green("Gulp's watch has begun. Gulp is the shield that guards the realms of AEM."))
+logAndNotifiy("Gulp's watch has begun. Gulp is the shield that guards the realms of AEM.", 'info', 'both')

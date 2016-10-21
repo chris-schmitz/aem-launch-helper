@@ -1,7 +1,8 @@
 const path = require('path')
 
 const paths = {
-    assets: path.resolve(__dirname, 'assets')
+    assets: path.resolve(__dirname, 'assets'),
+    bin: '/usr/local/bin'
 }
 
 const assets = {
