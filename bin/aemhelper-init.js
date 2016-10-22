@@ -25,12 +25,12 @@ let askForLicense = {
     message: 'Enter the path to your AEM license.'
 }
 
-let askForBinaryInstallPath = {
-    type: 'input',
-    name: 'binInstallPath',
-    message: 'As a part of this process the `vlt` command line tool will be installed. What bin directory would you like it installed in?',
-    default: '/usr/local/bin' // not sure if this is the best default to use. Run with it or now.
-}
+// let askForBinaryInstallPath = {
+//     type: 'input',
+//     name: 'binInstallPath',
+//     message: 'As a part of this process the `vlt` command line tool will be installed. What bin directory would you like it installed in?',
+//     default: '/usr/local/bin' // not sure if this is the best default to use. Run with it or now.
+// }
 
 // I'm leaving this in b/c I may add it back in during a refactor, but at the moment
 // I'm cutting it out because part of the xml needed in the `~/.valut/auth.xml`

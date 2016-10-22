@@ -33,7 +33,7 @@ gulp.watch(['jcr_root/**/*.scss'],
 		gulp.src('jcr_root/**/*.scss')
 			.pipe(sass())
 			.on('error', sass.logError)
-			.pipe(gulp.dest('jcr_root/'))
+			.pipe(gulp.dest('./jcr_root/'))
 	}
 )
 
