@@ -41,17 +41,15 @@ co(function *(){
     bar.tick()
     yield fst.copyToLocation(jarPathAnswer.jarPath, `${config.paths.assets}/${config.assets.baseJarName}`)
     bar.tick()
-    yield fst.extractVltCliTool()
+    let vaultBinaryLocation = yield fst.extractVltCliTool()
     bar.tick()
     let inPath = yield fst.checkToSeeIfVltIsInPath()
     bar.tick()
 
     if(!inPath){
-        console.log(chalk.bgCyan('Add the following to your environment path: <path to installed vault tools>'))
-    }
-
-    if(!inPath){
-        console.log(chalk.bgCyan('Add the following to your environment path: <path to installed vault tools>'))
+        console.log(chalk.bgCyan(`Add the following to your environment path: ${vaultBinaryLocation}`))
+    } else {
+        console.log(chalk.green(`The vlt binary has been installed in the following location: ${vaultBinaryLocation}`))
     }
 
     console.log(chalk.green('\nInitilization complete.'))
