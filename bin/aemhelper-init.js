@@ -30,13 +30,13 @@ co(function *(){
     let jarPathAnswer = yield inquirer.prompt(askForJarLocation)
     let licensePathAnswer = yield inquirer.prompt(askForLicense)
 
-    let bar = new ProgressBar('Setting up helper tools (step :current of 2): [:bar]', {total: 4})
+    let totalSteps = 6
+    let bar = new ProgressBar(`Setting up helper tools (step :current of ${totalSteps}): [:bar]`, {total: totalSteps})
     bar.tick()
 
 
     yield fst.checkToSeeIfJavaRuntimeEnvIsAvailable()
     bar.tick()
-    console.log('java installed')
     yield fst.copyToLocation(licensePathAnswer.licensePath, `${config.paths.assets}/${config.assets.licenseFileName}`)
     bar.tick()
     yield fst.copyToLocation(jarPathAnswer.jarPath, `${config.paths.assets}/${config.assets.baseJarName}`)
