@@ -8,9 +8,9 @@ const ProgressBar = require('progress')
 const config = require('../config')
 const fst = require('../lib/FileSystemTools')
 
-// console.log('Setting up AEM environment tools.\n')
-// console.log("Special note: these helper tools do not include the AEM .jar or license files. As part of this initilization process you will be asked to provide both files so that this helper tool can copy it into it's assets folder. If you do not have the aem .jar file and the license file handy, please cancel this init process, locate the files, and start it again." )
-// console.log()
+console.log('Setting up AEM environment tools.\n')
+console.log("Special note: these helper tools do not include the AEM .jar or license files. As part of this initilization process you will be asked to provide both files so that this helper tool can copy it into it's assets folder. If you do not have the aem .jar file and the license file handy, please cancel this init process, locate the files, and start it again." )
+console.log()
 
 let askForJarLocation = {
     type:'input',

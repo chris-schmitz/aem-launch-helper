@@ -6,6 +6,7 @@ const inquirer = require('inquirer')
 const co = require('co')
 const {appSettings} = require('../appSettings')
 const fst = require('../lib/FileSystemTools')
+const notifier = require('../lib/Notifier')
 
 program
     .option(
@@ -17,7 +18,7 @@ program
     .parse(process.argv)
 
 if(program.environment instanceof Error){
-    throw program.environment
+    notifier(program.environment, 'failure', 'both')
 }
 
 let confirm = {
@@ -32,5 +33,5 @@ co(function *(){
     if(!answer.delete) return
 
     let result = yield fst.destroyEnvironment(program.environment)
-    console.log(chalk.green(result))
-}).catch(error => console.error(chalk.red(error)))
+    notifier(result, 'success', 'both')
+}).catch(error => notifier(error, 'failure', 'both'))

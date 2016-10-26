@@ -7,7 +7,8 @@ const {exec} = require('child_process')
 const fs = require('fs')
 const {appSettings} = require('../appSettings')
 const co = require('co')
-let fst = require('../lib/FileSystemTools')
+const notifier = require('../lib/Notifier')
+const fst = require('../lib/FileSystemTools')
 
 program
     .option(
@@ -22,8 +23,7 @@ program
 // If we aren't killing all instances we need to make sure that we're using a
 // valid environment string to target the process(es) to kill.
 if(program.all === undefined && program.environment instanceof Error){
-    console.error(program.environment)
-    return
+    notifier(program.environment, 'failure', 'both')
 }
 
 function matchesJarPattern(string){
@@ -35,8 +35,8 @@ function matchesJarPattern(string){
 }
 
 exec('ps x', appSettings.maxBuffer, (err, stdout, stderr) => {
-    if(err) throw new Error(chalk.red(err))
-    if(stderr) throw new Error(chalk.red(stderr))
+    if(err)  notifier(new Error(err), 'failure', 'both')
+    if(stderr) notifier(new Error(stderr), 'failure', 'both')
 
     let jarProcesses =
         stdout.toString()
@@ -50,11 +50,11 @@ exec('ps x', appSettings.maxBuffer, (err, stdout, stderr) => {
     let jarProcessIds = jarProcesses.map(processLine => processLine.match(/^[0-9]+/)[0])
 
     if(jarProcessIds.length === 0){
-        console.log(chalk.blue('There are no aem instance processes running.'))
+        notifier('There are no aem instance processes running.', 'info', 'both')
         return
     }
 
     Promise.all(jarProcessIds.map(id => fst.killProcess(id)))
-        .then(result => console.log(chalk.green(result.join('\n'))))
-        .catch(err => console.log(chalk.red(err)))
+        .then(result => notifier(result.join('\n')), 'success', 'both')
+        .catch(err => notifier(err, 'failure', 'both'))
 })

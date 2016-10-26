@@ -3,6 +3,7 @@
 const program = require('commander')
 const {exec} = require('child_process')
 const chalk = require('chalk')
+const notifier = require('../lib/Notifier')
 
 program
     .option('-p, --port [port]', 'Port to use for pull. Defaults to 4502.')
@@ -15,7 +16,7 @@ let command = `vlt ${credentials} co http://localhost:${port}/crx --force`
 
 exec(command, (err, stdout, stderr) => {
 	if(err) {
-		console.error(chalk.red(err))
+        notifier(err, 'failure', 'both')
 	}
-	console.log(chalk.green(stdout))
+    notifier(stdout, 'success', 'both')
 })

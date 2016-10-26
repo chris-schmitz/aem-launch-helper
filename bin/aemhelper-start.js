@@ -7,6 +7,7 @@ const co = require('co')
 const {exec} = require('child_process')
 const {appSettings, isAValidEnvironment} = require('../appSettings')
 const fst = require('../lib/FileSystemTools')
+const notifier = require('../lib/Notifier')
 
 
 program
@@ -22,13 +23,13 @@ program
 // If we aren't killing all instances we need to make sure that we're using a
 // valid environment string to target the process(es) to kill.
 if(program.all === undefined && program.environment instanceof Error){
-    console.error(program.environment)
+    notifier(program.environment, 'failure', 'both')
     return
 }
 co(function *(){
     const targetPath = `${appSettings.environmentBuildDirectory}/${program.environment}`
     yield fst.directoryContainsRequiredAEMFiles(targetPath)
     yield fst.openJarFile(`${targetPath}/aem-${program.environment}-*.jar`)
-    console.log(chalk.green(`AEM ${program.environment} enviornment starting up...`))
+    notifier(`AEM ${program.environment} enviornment starting up...`, 'success', 'both')
 })
-.catch(error => {throw new Error(chalk.red(error))})
+.catch(error => {notifier( new Error(error), 'failure', 'both')})
