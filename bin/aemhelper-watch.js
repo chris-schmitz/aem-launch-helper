@@ -7,8 +7,7 @@ const gulp      = require('gulp')
 const sass		= require('gulp-sass')
 const path = require('path')
 const logAndNotifiy = require('../lib/Notifier')
-const {FileSystemTools} = require('../lib/FileSystemTools')
-const fst = new FileSystemTools
+const fst = require('../lib/FileSystemTools')
 
 program
     .option('-p, --port [port]', 'Port to use for push. Defaults to 4502.', /[0-9]+/, 4502)

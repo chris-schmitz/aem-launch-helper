@@ -7,8 +7,7 @@ const path = require('path')
 const co = require('co')
 const {appSettings, isAValidEnvironment} = require('../appSettings')
 const {assets} = require('../config')
-const {FileSystemTools} = require('../lib/FileSystemTools')
-const fst = new FileSystemTools
+const fst = require('../lib/FileSystemTools')
 
 program
     .option('-p, --port <port>', 'The port you want associated with this instance.', /[0-9]+/, 4502)

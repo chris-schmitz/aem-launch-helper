@@ -14,4 +14,7 @@
 - Review the [completion.js](https://docs.npmjs.com/cli/completion) tool for allowing tab completion in prompts
 - Determine if `usr/local/bin` is the best bin dir to use for the vlt tools
 - Refactor all console logs to use the logAndNotify module
-- [ ] At this point I'm just counting on the fact that this is going to be a mac only utility for a while. At some point if there is a demand for it, go back and make it os independent 
+- [ ] At this point I'm just counting on the fact that this is going to be a mac only utility for a while. At some point if there is a demand for it, go back and make it os independent
+- [ ] Figure out what's going on with this line in `aemhelper-stop`
+        .filter(processIdMatch => processIdMatch !== null && processIdMatch.length >= 2 )
+        throws the error `TypeError: Cannot read property 'length' of null`

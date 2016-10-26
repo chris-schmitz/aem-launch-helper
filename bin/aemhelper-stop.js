@@ -7,8 +7,7 @@ const {exec} = require('child_process')
 const fs = require('fs')
 const {appSettings} = require('../appSettings')
 const co = require('co')
-const {FileSystemTools} = require('../lib/FileSystemTools')
-let fst = new FileSystemTools
+let fst = require('../lib/FileSystemTools')
 
 program
     .option(
@@ -44,16 +43,10 @@ exec('ps x', appSettings.maxBuffer, (err, stdout, stderr) => {
               .split('\n')
               .filter(matchesJarPattern)
               .map(processLine => processLine.match(/^\s+?([0-9]+)/)) // note that the ouput of `ps x` may have a space or spaces padding the first column
-              .filter(processIdMatch => processIdMatch.length >= 2 ) // i.e. we found a match for our pattern and were able to see group 1 (`([0-9]+)`) from the match
+              .filter(processIdMatch => processIdMatch !== null && processIdMatch.length >= 2 ) // i.e. we found a match for our pattern and were able to see group 1 (`([0-9]+)`) from the match
               .map(processMatch => processMatch[1])
 
-    if(jarProcesses.length === 0){
-        console.log(chalk.blue("Cannot find an AEM instance to stop."))
-        return
-    }
-    console.log(jarProcesses.map(processLine => processLine.match(/^./)))
 
-/*
     let jarProcessIds = jarProcesses.map(processLine => processLine.match(/^[0-9]+/)[0])
 
     if(jarProcessIds.length === 0){
@@ -64,5 +57,4 @@ exec('ps x', appSettings.maxBuffer, (err, stdout, stderr) => {
     Promise.all(jarProcessIds.map(id => fst.killProcess(id)))
         .then(result => console.log(chalk.green(result.join('\n'))))
         .catch(err => console.log(chalk.red(err)))
-        */
 })

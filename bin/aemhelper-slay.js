@@ -5,8 +5,7 @@ const chalk = require('chalk')
 const inquirer = require('inquirer')
 const co = require('co')
 const {appSettings} = require('../appSettings')
-const {FileSystemTools} = require('../lib/FileSystemTools')
-const fst = new FileSystemTools
+const fst = require('../lib/FileSystemTools')
 
 program
     .option(

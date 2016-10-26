@@ -6,8 +6,7 @@ const chalk = require('chalk')
 const co = require('co')
 const {exec} = require('child_process')
 const {appSettings, isAValidEnvironment} = require('../appSettings')
-const {FileSystemTools} = require('../lib/FileSystemTools')
-const fst = new FileSystemTools
+const fst = require('../lib/FileSystemTools')
 
 
 program
