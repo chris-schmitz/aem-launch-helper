@@ -9,6 +9,7 @@ const {appSettings, isAValidEnvironment} = require('../appSettings')
 const {assets} = require('../config')
 const fst = require('../lib/FileSystemTools')
 const notifier = require('../lib/Notifier')
+const assetManager = require('../lib/AssetManager')
 
 program
     .option('-p, --port <port>', 'The port you want associated with this instance.', /[0-9]+/, 4502)
@@ -20,14 +21,14 @@ program
         new Error(`Invalid environment name.`)
     )
     .option(
-        '-l, --license <licensepath>',
-        'The path to the license file that will used for this instance.',
+        '-l, --license [licensepath]',
+        'The path to the license file that will used for this instance.\nNote that this path is only needed if you have not run `aemhelper init`',
         /.+\/license\.properties$/,
         new Error('You must provide a license file.')
     )
     .parse(process.argv)
 
-if(program.license instanceof Error){
+if(!assetManager.licenseIsInstalled()  && program.license instanceof Error){
     notifier(program.license, 'failure', 'console')
 }
 
@@ -49,8 +50,10 @@ co(function *(){
     let baseJarLocation = yield fst.baseJarExists()
     let envDirectory = yield fst.createEnvironmentDirectory(program.environment)
     let jarFileCreated = yield fst.copyToLocation(baseJarLocation, `${envDirectory}/${generateEnviromentSpecificJarName()}`)
-    let licenseCoppied = yield fst.copyToLocation(program.license, `${envDirectory}/${assets.licenseFileName}`)
-    notifier(`The ${program.environment} environment has been created.`, 'success,', 'console')
+
+    let licenseFile = assetManager.licenseIsInstalled() ? assetManager.getLicensePath() : program.license
+    let licenseCoppied = yield fst.copyToLocation(licenseFile, `${envDirectory}/${assets.licenseFileName}`)
+    notifier(`The ${program.environment} environment has been created.`, 'success', 'console')
 }).catch(error => {
     notifier(error, 'failure', 'console')
 })

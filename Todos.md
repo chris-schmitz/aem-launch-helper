@@ -1,7 +1,7 @@
 # Todos
 
-- [ ] Refactor create subtool to use the asset license and jar if they exist
-- [ ] Refactor all console logs to use the logAndNotify module
+- [x] Refactor create subtool to use the asset license and jar if they exist
+- [x] Refactor all console logs to use the logAndNotify module
 - [ ] Revisit some of the error throwing in the bin files. When adding the notifier in the os notification is coming through with the markings for the console coloring
 - [ ] Figure out what's going on with this line in `aemhelper-stop`
 
@@ -25,3 +25,4 @@
 ## Someday maybe
 - [ ] Add "all" option into all subtools for interating with all envs (see stop subtool)
 - [ ] At this point I'm just counting on the fact that this is going to be a mac only utility for a while. At some point if there is a demand for it, go back and make it os independent
+- [ ] Review FileSystemTools and consider converting some of the promises to sync function calls if it makes sense to do so

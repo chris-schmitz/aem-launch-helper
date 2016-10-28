@@ -5,6 +5,7 @@ const {exec} = require('child_process')
 const chalk = require('chalk')
 const notifier = require('../lib/Notifier')
 
+
 program
     .option('-p, --port [port]', 'Port to use for pull. Defaults to 4502.')
     .option('-c, --credentials [user:password]', 'Credentials to use for pull.')

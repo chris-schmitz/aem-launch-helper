@@ -2,12 +2,13 @@ const path = require('path')
 
 const paths = {
     assets: path.resolve(__dirname, 'assets'),
-    bin: '/Users/cschmitz/Desktop/testdir'
-    // bin: '/usr/local/bin'
+    bin: '/usr/local/bin'
 }
 paths.extractionPath = `${path.resolve(paths.assets, 'extractWorkspace')}`
 
 
+// Todo: consider moving these to `appSettings`. they're not really
+// values that need to be changed by the developer.
 const assets = {
     baseJarName: 'aem-environment-port.jar',
     licenseFileName: 'license.properties',
