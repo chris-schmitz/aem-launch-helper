@@ -92,14 +92,14 @@ Creates a new environment for an AEM instance. Note that this _does not_ start t
 - If no port value is provided it will default to 4502
 - If you've run the `aemhelper init` process no license value is necessary. If you have not run `aemhelper init` or you would like to use a different license, provide the path to the license file.
 
-
-### Start AEM instance
+### `aemhelper start`
+#### Start AEM instance
 
 Starts the AEM environment instance per the given environment string.
 
     aemhelper start -e <environment>
 
-    - environment (author, publish)
+- Valid environment values: author, publish
 
 ### Stop AEM instance
 
@@ -133,3 +133,6 @@ Pulls from your AEM instance into your local File Vault file system.
 Watches your local File Vault file system for changes and pushes those changes into your AEM instance on change.
 
     aemhelper watch
+
+
+## Valid environment values
