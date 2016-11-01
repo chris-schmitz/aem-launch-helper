@@ -19,7 +19,7 @@ program
 
 let credentials = program.credentials ? `--credentials ${program.credentials}` : ''
 
-gulp.watch(['jcr_root/**/*','!jcr_root/**/.vlt', 'jcr_root/**/.content.xml'],
+gulp.watch(['jcr_root/**/*','!jcr_root/**/.vlt', '!jcr_root/**/*.scss', 'jcr_root/**/.content.xml'],
     () => {
         fst.pushToAEM(credentials, program.port)
             .then(stdout => logAndNotifiy(stdout, 'success', 'both'))
@@ -29,12 +29,14 @@ gulp.watch(['jcr_root/**/*','!jcr_root/**/.vlt', 'jcr_root/**/.content.xml'],
     .on('change', event => console.log('File ' + event.path + ' was ' + event.type))
 
 gulp.watch(['jcr_root/**/*.scss'],
-	() => {
-		gulp.src('jcr_root/**/*.scss')
-			.pipe(sass())
-			.on('error', sass.logError)
-			.pipe(gulp.dest('jcr_root/'))
-	}
+	() => {}
 )
+    .on('change', (file) => {
+        gulp.src(file.path, {base: 'jcr_root'})
+            .pipe(sass())
+            .on('error', sass.logError)
+            .pipe(gulp.dest('jcr_root/'))
+
+    })
 
 console.log(chalk.green("Gulp's watch has begun. Gulp is the shield that guards the realms of AEM."))
