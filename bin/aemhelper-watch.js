@@ -8,6 +8,7 @@ const sass		= require('gulp-sass')
 const path = require('path')
 const logAndNotifiy = require('../lib/Notifier')
 const {FileSystemTools} = require('../lib/FileSystemTools')
+const fs = require('fs')
 const fst = new FileSystemTools
 
 program
@@ -20,6 +21,13 @@ program
 
 let credentials = program.credentials ? `--credentials ${program.credentials}` : ''
 let sassOnly = program.sassonly;
+
+// If you're not in the parent directory of the `jcr_root` folder the watch will never trigger per the watch paths
+// defined below. This check makes sure that you're in the right place before watching so that you don't sit there
+// saving your files and wondering why the watch action never triggers :P
+if(fs.readdirSync('./').filter(fileOrFolder => fileOrFolder === 'jcr_root').length === 0){
+    throw new Error(chalk.red('You must be in a directory that contains the "jcr_root" folder to use this watcher.'))
+}
 
 if (!sassOnly) {
     gulp.watch(['jcr_root/**/*','!jcr_root/**/.vlt', '!jcr_root/**/*.scss', 'jcr_root/**/.content.xml'],
