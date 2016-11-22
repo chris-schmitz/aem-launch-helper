@@ -22,5 +22,7 @@
     "node-notifier": "^4.6.1",
     "progress": "^1.1.8"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "gulp-autoprefixer": "^3.1.1"
+  }
 }

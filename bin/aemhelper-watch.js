@@ -5,8 +5,9 @@ const {exec}    = require('child_process')
 const chalk     = require('chalk')
 const gulp      = require('gulp')
 const sass		= require('gulp-sass')
+const autoprefixer  = require('gulp-autoprefixer')
 const path = require('path')
-const logAndNotifiy = require('../lib/Notifier')
+const logAndNotify = require('../lib/Notifier')
 const fst = require('../lib/FileSystemTools')
 const fs = require('fs')
 
@@ -32,8 +33,8 @@ if (!sassOnly) {
     gulp.watch(['jcr_root/**/*','!jcr_root/**/.vlt', '!jcr_root/**/*.scss', 'jcr_root/**/.content.xml'],
         () => {
             fst.pushToAEM(credentials, program.port)
-                .then(stdout => logAndNotifiy(stdout, 'success', 'both'))
-                .catch(err => logAndNotifiy(stdout, 'failure', 'both'))
+                .then(stdout => logAndNotify(stdout, 'success', 'both'))
+                .catch(err => logAndNotify(stdout, 'failure', 'both'))
         }
     )
         .on('change', event => console.log('File ' + event.path + ' was ' + event.type))
@@ -46,10 +47,11 @@ gulp.watch(['jcr_root/**/*.scss'],
         gulp.src(file.path, {base: 'jcr_root'})
             .pipe(sass({indentWidth: 2}))
             .on('error', sass.logError)
+            .pipe(autoprefixer())
             .pipe(gulp.dest('jcr_root/'))
 
-        logAndNotifiy([file.path,' was compiled'].join(''), 'success', 'both')
+        logAndNotify([file.path,' was compiled'].join(''), 'success', 'both')
 
     })
 
-logAndNotifiy("Gulp's watch has begun. Gulp is the shield that guards the realms of AEM.", 'success', 'both')
+logAndNotify("Gulp's watch has begun. Gulp is the shield that guards the realms of AEM.", 'success', 'both')
